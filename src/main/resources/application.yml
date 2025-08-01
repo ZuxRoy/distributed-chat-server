@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: chat-server
+  
+  datasource:
+    url: jdbc:postgresql://localhost:5432/chatdb
+    username: chatuser
+    password: chatpass
+    driver-class-name: org.postgresql.Driver
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: chat-server-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  
+  redis:
+    host: localhost
+    port: 6379
+    timeout: 2000ms
+
+server:
+  port: 8080
+
+grpc:
+  server:
+    port: 9090
+
+logging:
+  level:
+    com.chatserver: DEBUG
+    org.springframework.kafka: INFO

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Distributed Chat Server</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h3>Chat Server</h3>
+            </div>
+            
+            <div class="connection-status" id="connectionStatus">
+                Connecting...
+            </div>
+            
+            <div class="user-info">
+                <div id="currentUser">Not logged in</div>
+            </div>
+            
+            <div class="user-controls">
+                <input type="text" id="targetUser" placeholder="Username for DM">
+                <button onclick="startDirectMessage()">Start DM</button>
+                
+                <input type="text" id="groupName" placeholder="Group name">
+                <button onclick="createGroup()">Create Group</button>
+                
+                <input type="text" id="joinGroupId" placeholder="Group ID">
+                <button onclick="joinGroup()">Join Group</button>
+            </div>
+            
+            <div class="chat-list" id="chatList">
+                <!-- Chat items will be populated here -->
+            </div>
+        </div>
+        
+        <!-- Main Chat Area -->
+        <div class="main-chat">
+            <div class="chat-header">
+                <h4 id="chatTitle">Select a chat to start messaging</h4>
+                <small id="chatSubtitle"></small>
+            </div>
+            
+            <div class="messages-container" id="messagesContainer">
+                <div style="text-align: center; margin-top: 50px; color: #6c757d;">
+                    <p>Welcome to Distributed Chat Server</p>
+                    <p>Start a conversation by selecting a user or group</p>
+                </div>
+            </div>
+            
+            <div class="message-input">
+                <input type="text" id="messageInput" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h3>Enter Your Username</h3>
+            <input type="text" id="usernameInput" placeholder="Username" onkeypress="handleLoginKeyPress(event)">
+            <button onclick="login()">Login</button>
+        </div>
+    </div>
+
+    <!-- Group Creation Modal -->
+    <div id="groupModal" class="modal">
+        <div class="modal-content">
+            <h3>Group Created Successfully</h3>
+            <p>Group ID: <span id="createdGroupId"></span></p>
+            <p>Share this ID with others to join the group</p>
+            <button onclick="closeGroupModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    
+    <!-- Main JavaScript -->
+    <script src="js/chat.js"></script>
+</body>
+</html>
